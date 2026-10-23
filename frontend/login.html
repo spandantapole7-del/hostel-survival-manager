@@ -1,0 +1,413 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Login | Hostel Survival Manager</title>
+
+    <link rel="stylesheet" href="CSS/style.css" />
+
+    <style>
+      .auth-page {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 40px 20px;
+        background:
+          radial-gradient(
+            circle at 10% 20%,
+            rgba(99, 102, 241, 0.15),
+            transparent 30%
+          ),
+          radial-gradient(
+            circle at 90% 80%,
+            rgba(168, 85, 247, 0.15),
+            transparent 30%
+          ),
+          #f7f8fc;
+      }
+
+      .auth-container {
+        width: 100%;
+        max-width: 1050px;
+        min-height: 620px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        background: rgba(255, 255, 255, 0.85);
+        backdrop-filter: blur(20px);
+        border-radius: 28px;
+        overflow: hidden;
+        box-shadow: 0 25px 70px rgba(30, 41, 59, 0.15);
+      }
+
+      .auth-left {
+        padding: 55px;
+        background: linear-gradient(145deg, #6366f1, #8b5cf6);
+        color: white;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .auth-left::before {
+        content: "";
+        position: absolute;
+        width: 300px;
+        height: 300px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.08);
+        top: -100px;
+        right: -100px;
+      }
+
+      .auth-left::after {
+        content: "";
+        position: absolute;
+        width: 250px;
+        height: 250px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.06);
+        bottom: -100px;
+        left: -80px;
+      }
+
+      .auth-logo {
+        font-size: 22px;
+        font-weight: 800;
+        position: relative;
+        z-index: 2;
+      }
+
+      .auth-hero {
+        position: relative;
+        z-index: 2;
+      }
+
+      .auth-hero h1 {
+        font-size: 42px;
+        line-height: 1.15;
+        margin-bottom: 20px;
+      }
+
+      .auth-hero p {
+        font-size: 16px;
+        line-height: 1.7;
+        opacity: 0.9;
+        max-width: 420px;
+      }
+
+      .auth-feature {
+        position: relative;
+        z-index: 2;
+        display: flex;
+        gap: 14px;
+        align-items: center;
+        font-size: 14px;
+        opacity: 0.95;
+      }
+
+      .auth-feature-icon {
+        width: 42px;
+        height: 42px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(255, 255, 255, 0.15);
+        font-size: 20px;
+      }
+
+      .auth-right {
+        padding: 55px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .auth-form {
+        width: 100%;
+        max-width: 400px;
+      }
+
+      .auth-form-header {
+        margin-bottom: 32px;
+      }
+
+      .auth-form-header h2 {
+        font-size: 32px;
+        color: #111827;
+        margin-bottom: 8px;
+      }
+
+      .auth-form-header p {
+        color: #6b7280;
+        font-size: 14px;
+      }
+
+      .form-group {
+        margin-bottom: 20px;
+      }
+
+      .form-group label {
+        display: block;
+        margin-bottom: 8px;
+        font-size: 14px;
+        font-weight: 600;
+        color: #374151;
+      }
+
+      .input-wrapper {
+        position: relative;
+      }
+
+      .input-icon {
+        position: absolute;
+        left: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 17px;
+        color: #9ca3af;
+      }
+
+      .form-input {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 14px 15px 14px 45px;
+        border: 1px solid #e5e7eb;
+        border-radius: 13px;
+        background: #f9fafb;
+        font-size: 14px;
+        outline: none;
+        transition: 0.25s;
+      }
+
+      .form-input:focus {
+        border-color: #6366f1;
+        background: white;
+        box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+      }
+
+      .password-toggle {
+        position: absolute;
+        right: 14px;
+        top: 50%;
+        transform: translateY(-50%);
+        border: none;
+        background: none;
+        cursor: pointer;
+        color: #9ca3af;
+        font-size: 16px;
+      }
+
+      .form-options {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin: 5px 0 25px;
+        font-size: 13px;
+      }
+
+      .remember {
+        display: flex;
+        align-items: center;
+        gap: 7px;
+        color: #6b7280;
+      }
+
+      .forgot-link {
+        color: #6366f1;
+        text-decoration: none;
+        font-weight: 600;
+      }
+
+      .auth-button {
+        width: 100%;
+        border: none;
+        padding: 15px;
+        border-radius: 13px;
+        background: linear-gradient(135deg, #6366f1, #8b5cf6);
+        color: white;
+        font-size: 15px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: 0.25s;
+        box-shadow: 0 10px 25px rgba(99, 102, 241, 0.25);
+      }
+
+      .auth-button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 14px 30px rgba(99, 102, 241, 0.3);
+      }
+
+      .auth-message {
+        display: none;
+        padding: 12px;
+        border-radius: 10px;
+        margin-bottom: 18px;
+        font-size: 13px;
+      }
+
+      .auth-message.error {
+        display: block;
+        background: #fef2f2;
+        color: #dc2626;
+      }
+
+      .auth-message.success {
+        display: block;
+        background: #ecfdf5;
+        color: #059669;
+      }
+
+      .auth-switch {
+        text-align: center;
+        margin-top: 25px;
+        color: #6b7280;
+        font-size: 14px;
+      }
+
+      .auth-switch a {
+        color: #6366f1;
+        font-weight: 700;
+        text-decoration: none;
+      }
+
+      .back-home {
+        position: fixed;
+        top: 25px;
+        left: 30px;
+        color: #6366f1;
+        text-decoration: none;
+        font-size: 14px;
+        font-weight: 600;
+        z-index: 10;
+      }
+
+      @media (max-width: 800px) {
+        .auth-container {
+          grid-template-columns: 1fr;
+        }
+
+        .auth-left {
+          display: none;
+        }
+
+        .auth-right {
+          padding: 40px 25px;
+        }
+
+        .back-home {
+          position: absolute;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <a href="index.html" class="back-home">← Back to home</a>
+
+    <main class="auth-page">
+      <div class="auth-container">
+        <!-- LEFT SIDE -->
+        <section class="auth-left">
+          <div class="auth-logo">🏠 HostelSurvival</div>
+
+          <div class="auth-hero">
+            <h1>
+              Welcome<br />
+              back, student.
+            </h1>
+
+            <p>
+              Keep your hostel life organized, track your expenses and stay in
+              control of your money.
+            </p>
+          </div>
+
+          <div class="auth-feature">
+            <div class="auth-feature-icon">💰</div>
+            <span>Track your spending and manage your budget smarter.</span>
+          </div>
+        </section>
+
+        <!-- RIGHT SIDE -->
+        <section class="auth-right">
+          <form class="auth-form" id="loginForm">
+            <div class="auth-form-header">
+              <h2>Sign in</h2>
+              <p>Enter your details to access your dashboard.</p>
+            </div>
+
+            <div id="authMessage" class="auth-message"></div>
+
+            <!-- EMAIL -->
+            <div class="form-group">
+              <label for="loginEmail"> Email Address </label>
+
+              <div class="input-wrapper">
+                <span class="input-icon">✉️</span>
+
+                <input
+                  type="email"
+                  id="loginEmail"
+                  class="form-input"
+                  placeholder="you@example.com"
+                  required
+                />
+              </div>
+            </div>
+
+            <!-- PASSWORD -->
+            <div class="form-group">
+              <label for="loginPassword"> Password </label>
+
+              <div class="input-wrapper">
+                <span class="input-icon">🔒</span>
+
+                <input
+                  type="password"
+                  id="loginPassword"
+                  class="form-input"
+                  placeholder="Enter your password"
+                  required
+                />
+
+                <button
+                  type="button"
+                  class="password-toggle"
+                  onclick="togglePassword('loginPassword', this)"
+                >
+                  👁
+                </button>
+              </div>
+            </div>
+
+            <div class="form-options">
+              <label class="remember">
+                <input type="checkbox" />
+                Remember me
+              </label>
+
+              <a href="#" class="forgot-link"> Forgot password? </a>
+            </div>
+
+            <button type="submit" class="auth-button">Sign In →</button>
+
+            <div class="auth-switch">
+              Don't have an account?
+              <a href="signup.html">Create Account</a>
+            </div>
+          </form>
+        </section>
+      </div>
+    </main>
+
+    <script src="JS/api.js"></script>
+    <script src="JS/auth.js"></script>
+  </body>
+</html>
+s
